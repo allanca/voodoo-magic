@@ -1,0 +1,53 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "fedora": [
+
+    ],
+    "centos": [
+
+    ],
+    "ubuntu": [
+
+    ],
+    "redhat": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Installs subversion",
+  "version": "0.8.1",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Opscode, Inc.",
+  "name": "subversion",
+  "recipes": {
+    "subversion": "Installs subversion and extra svn packages"
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+
+  },
+  "maintainer_email": "cookbooks@opscode.com"
+}

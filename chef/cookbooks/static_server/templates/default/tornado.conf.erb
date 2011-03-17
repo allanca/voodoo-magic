@@ -1,0 +1,4 @@
+# Only retry if there was a communication error, not a timeout
+# on the Tornado server (to avoid propagating "queries of death"
+# to all frontends)
+proxy_next_upstream error;

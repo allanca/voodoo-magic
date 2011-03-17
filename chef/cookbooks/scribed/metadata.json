@@ -1,0 +1,43 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Installs/Configures scribed",
+  "version": "0.1.0",
+  "long_description": "Scribed, from Facebook, is a distributed logging server",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Piick, Inc.",
+  "name": "scribed",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+    "thrift": [
+
+    ]
+  },
+  "maintainer_email": ""
+}

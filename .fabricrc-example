@@ -1,0 +1,8 @@
+aws_account_id=
+aws_access_key=
+aws_secret_key=
+key_filename=
+user=ubuntu
+app_environment=production
+psh_user=
+psh_key_filename=

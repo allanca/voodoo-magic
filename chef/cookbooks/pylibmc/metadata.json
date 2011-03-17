@@ -1,0 +1,49 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Installs and configures pylibmc",
+  "version": "0.1.0",
+  "long_description": "Testing on ubuntu 10.10",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Piick, Inc",
+  "name": "pylibmc",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+    "memcached": [
+
+    ],
+    "build": [
+
+    ]
+  },
+  "maintainer_email": "allan@piick.com"
+}

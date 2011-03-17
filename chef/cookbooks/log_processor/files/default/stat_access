@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+stat_access
+
+Copyright (c) 2010 Piick.com, Inc. All rights reserved.
+"""
+
+from email.mime.text import MIMEText
+import smtplib
+import sys
+
+hour = sys.argv[1].split('-', 1)[1]
+
+status_count = {}
+access_count = {}
+generate_sum = {}
+generate_discrete = {}
+with open(sys.argv[1], 'r') as f:
+    for line in f:
+        ts, user, ip, status, method, path, generate = line.strip().split("\t")
+        try:
+            status_count[int(status)] += 1
+        except KeyError:
+            status_count[int(status)] = 1
+
+        try:
+            access_count[path] += 1
+        except KeyError:
+            access_count[path] = 1
+
+        try:
+            generate_sum[path] += float(generate)
+        except KeyError:
+            generate_sum[path] = float(generate)
+
+        try:
+            generate_discrete[path].append(float(generate))
+        except KeyError:
+            generate_discrete[path] = [float(generate)]
+
+
+html = []
+
+html.append('<h3>Hourly Status Counts for %s</h3><table>' % hour)
+for status, count in sorted(status_count.items(), key=lambda i: i[1], reverse=True):
+    html.append('<tr><td>%s</td><td>%s</td></tr>' % (status, count))
+html.append('</table><br/><br/>')
+
+html.append('<h3>Hourly Access Counts for %s</h3><table>' % hour)
+for path, count in sorted(access_count.items(), key=lambda i: generate_sum[i[0]] / i[1], reverse=True):
+    html.append('<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>' %
+                (path, count, max(generate_discrete[path]), generate_sum[path] / count))
+html.append('</table><br/><br/><br/><br/>')
+
+from_email = "stats+access@admin.piick.com"
+to_emails = sys.argv[2].split(',')
+
+msg = MIMEText("".join(html), 'html')
+msg['Subject'] = 'Access Stats for %s' % hour
+msg['From'] = from_email
+msg['To'] = ";".join(to_emails)
+
+s = smtplib.SMTP("127.0.0.1")
+s.sendmail(from_email, to_emails, msg.as_string())
+s.quit()

@@ -1,0 +1,48 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Instsalls and configures munin",
+  "version": "0.9.1",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Opscode, Inc.",
+  "name": "munin",
+  "recipes": {
+    "munin::client": "Instlls munin and configures a client by searching for the server, which should have a role named monitoring",
+    "munin": "Empty, use one of the other recipes",
+    "munin::server": "Installs munin and configures a server, node should have the role 'monitoring' so clients can find it"
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+    "apache2": [
+
+    ]
+  },
+  "maintainer_email": "cookbooks@opscode.com"
+}

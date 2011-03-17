@@ -1,0 +1,184 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+stat_counter.py
+
+Copyright (c) 2010 Piick.com, Inc. All rights reserved.
+"""
+
+from datetime import date, datetime, timedelta
+import MySQLdb
+import os
+import pycassa
+import struct
+import time
+
+def process_file(log_name):
+    item_counts = {}
+    all_counts = {}
+    filename = sorted(os.listdir('/var/log/scribe/' + log_name))[-3]
+    filename = os.sep.join(('/var/log/scribe', log_name, filename))
+    for line in open(filename, 'r'):
+        ts_, id, counter, inc = line.strip().split("\t")
+        try:
+            item_counts[id][counter] += int(inc)
+        except KeyError:
+            item_counts.setdefault(id, {})[counter] = int(inc)
+        try:
+            all_counts[counter] += int(inc)
+        except KeyError:
+            all_counts[counter] = int(inc)
+    return item_counts, all_counts
+
+def calculate_age(packed_birthdate):
+    born = date.fromtimestamp(struct.unpack('q', packed_birthdate)[0])
+    today = date.today()
+    try:
+        birthday = born.replace(year=today.year)
+    except ValueError:
+        # birth date is February 29 and the current year is not a leap year
+        birthday = born.replace(year=today.year, day=born.day-1)
+    if birthday > today:
+        return today.year - born.year - 1
+    else:
+        return today.year - born.year
+
+def query_cass(keys, main_cf_name, main_cols):
+    data = cass_cfs[main_cf_name].multiget(keys, main_cols + ['!'])
+
+    # Gather the friend count for each user.
+    if main_cf_name == 'User':
+        followers = cass_cfs['Followers'].multiget(keys)
+        leaders = cass_cfs['Leaders'].multiget(keys)
+        for key in keys:
+            try:
+                data[key]['friend_count'] = len(set(followers[key].keys()) &
+                                                set(leaders[key].keys()))
+            except KeyError:
+                continue
+
+    return data
+
+def update(counts, cf_name, cass_cols, table_name, bucket_data_gen):
+    stat_time = datetime.utcnow() - timedelta(0, 3600)
+    
+    item_counts, all_counts = counts
+    
+    # Only save stats from the regular counter space. Don't add the lineitem
+    # counter group. It'll just double up the stats. 
+    if table_name == 'user':
+        for name, value in all_counts.iteritems():
+            if value <= 0:
+                continue
+            sql = "INSERT INTO stats (time, name, value) " \
+                  "VALUES ('%s', '%s', %d) " \
+                  "ON DUPLICATE KEY UPDATE value = value + %d" % \
+                  (stat_time.strftime('%Y-%m-%d %H'), name, value, value)
+            try:
+                mysql_client.execute(sql)
+            except Exception, e:
+                print "Mysql Error: ", e
+        try:
+            mysql_connection.commit()
+        except Exception, e:
+            print "Unable to commit MySql INSERTS:", e
+
+    for i in xrange(0, len(item_counts), 100):
+        count_slice = dict(item_counts.items()[i:i+100])
+        data = query_cass(count_slice.keys(), cf_name, cass_cols)
+
+        start_time = time.time()
+        for id, count_item in count_slice.iteritems():
+            if id not in data:
+                continue
+            created = long(struct.unpack('q', data[id]['!'])[0] / 1e6)
+            bucket_data = bucket_data_gen(id, data[id])
+            bucket_values = ", ".join(["'%s'" % str(x)
+                                       for x in bucket_data.values()])
+            for name, value in count_item.iteritems():
+                if value <= 0:
+                    continue
+                sql  = "INSERT INTO %s (created, active, name, value, %s) " % \
+                       (table_name, ", ".join(bucket_data.keys()))
+                sql += "VALUES ('%s','%s','%s', %d, %s) " % \
+                       (date.fromtimestamp(created).strftime('%Y-%m-%d'),
+                       stat_time.strftime('%Y-%m-%d'),
+                       name, value, bucket_values)
+                sql += "ON DUPLICATE KEY UPDATE value = value + %d" % (value)
+                try:
+                    mysql_client.execute(sql)
+                except Exception, e:
+                    print "Mysql Error: ", e
+        try:
+            mysql_connection.commit()
+        except Exception, e:
+            print "Unable to commit MySql INSERTS:", e
+            
+        # Only issue one cassandra query per second
+        time.sleep(1 - (time.time() - start_time))
+
+def user_data(id, data):
+    # Count by 1s to 10, 5's to 100, and 25's after.
+    if data['friend_count'] < 10:
+        bucket_friend = data['friend_count']
+    elif data['friend_count'] < 100:
+        bucket_friend = data['friend_count'] // 5 + 8
+    else:
+        bucket_friend = data['friend_count'] // 25 + 24
+
+    if 'vf' in data:
+        bucket_activity = int((365 * 24 / 12) /
+                              struct.unpack('f', data['vf'])[0])
+    else:
+        bucket_activity = -1
+
+    data = {}
+    try:
+        data['bucket_gender'] = int(data['g'] == 'male')
+    except KeyError:
+        data['bucket_gender'] = -1
+    try:
+        data['bucket_age'] = calculate_age(data['b']) // 5
+    except KeyError:
+        data['bucket_age'] = -1
+    data['bucket_friend'] = bucket_friend
+    data['bucket_activity'] = bucket_activity
+    return data
+
+def line_data(id, data):
+    return {'bucket_type': data['t'],
+            'bucket_fb':   int(bool(data.get('fb', '')))}
+
+def main():
+    global mysql_client, mysql_connection, cass_client, cass_cfs
+
+    try:
+        cass_client = pycassa.connect_thread_local(
+                          ['<%= @database_servers.join(":9160','") %>:9160'],
+                          framed_transport=True)
+        cass_cfs = dict(((x, pycassa.ColumnFamily(cass_client, 'piick', x))
+                         for x in ('User', 'LineItem', 'Leaders', 'Followers')))
+    except Exception, e:
+        print "Unable to connect to the Cassandra database.", e
+        return
+    
+    try:
+        mysql_connection = MySQLdb.connect(host="localhost", user="stats",
+                                           passwd="5mNLpTMpEqmB638W", db="stats")
+        mysql_client = mysql_connection.cursor()
+    except Exception, e:
+        print "Unable to connect to the MySql database.", e
+        return
+    
+    update(process_file('counter'), 'User', ['b', 'g', 'vf'], 'user', user_data)
+    update(process_file('lineitem'), 'LineItem', ['t', 'fb'], 'lineitem', line_data)
+    
+    try:
+        mysql_client.close()
+        mysql_connection.close()
+    except Exception, e:
+        print "Unable to close connection to mysql server.", e
+        return
+
+if __name__ == '__main__':
+    main()

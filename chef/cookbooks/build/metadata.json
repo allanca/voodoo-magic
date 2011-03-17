@@ -1,0 +1,39 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache v2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Configures build dependencies",
+  "version": "0.1.0",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "37signals",
+  "name": "build",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+
+  },
+  "maintainer_email": "sysadmins@37signals.com"
+}

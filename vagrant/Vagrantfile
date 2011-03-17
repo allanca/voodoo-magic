@@ -1,0 +1,17 @@
+Vagrant::Config.run do |config|
+  config.vm.customize do |vm|
+    vm.name = "Voodoo-Magic"
+  end
+
+  config.vm.box = "vagrant-ubuntu-10.10-amd64"
+  config.vm.network("192.168.10.10")
+  config.vm.forward_port("ssh", 22, 2222, :auto => true, :adapter => 0)
+  config.vm.share_folder("src", "/src", "../../")
+
+  config.vm.provision :chef_solo, 
+                      :cookbooks_path => ["../chef/cookbooks"],
+                      :roles_path => "../chef/roles",
+                      :run_list => ["role[base]","role[dev]",
+                                    "role[loadbalancer]","role[web]","role[cache]",
+                                    "role[databasemaster]","role[async]","role[queue]"]
+end

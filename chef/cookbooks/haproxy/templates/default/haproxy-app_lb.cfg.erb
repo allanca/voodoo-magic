@@ -1,0 +1,37 @@
+global
+        #log 127.0.0.1   local0
+        #log 127.0.0.1   local1 notice
+        #log loghost     local0 info
+        #debug
+        #quiet
+        user            haproxy
+        group           haproxy
+        spread-checks   5
+
+defaults
+        #log             global
+        option          dontlognull
+        option          redispatch
+        balance         leastconn
+        retries         3
+        maxconn         2000
+        contimeout      5000
+        clitimeout      50000
+        srvtimeout      50000
+
+# Set up application listeners here.
+listen application 0.0.0.0:<%= @node[:haproxy][:listen_port] %>
+  mode    http
+  option  forwardfor
+  option  httpchk
+  <% @pool_members.each do |member| -%>
+ 	<% server_ip = member.has_key?("ec2") ? member["ec2"]["local_ipv4"] : member["ipaddress"] -%>
+	<% for i in 0..(member[:pi][:tornado_instances] - 1) %>
+ 	server  <%= member["hostname"] %> <%= server_ip %>:<%= member[:pi][:tornado_base_port] + i %> weight 1 check inter <%= node[:haproxy][:check_inter] %> fastinter <%= node[:haproxy][:check_fastinter] %> downinter <%= node[:haproxy][:check_downinter] %>
+	<% end %>
+  <% end -%>
+<% if node["haproxy"]["enable_admin"] -%>
+listen admin 0.0.0.0:22002
+  mode http
+  stats uri /
+<% end -%>

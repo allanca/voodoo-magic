@@ -1,0 +1,6 @@
+#!/bin/sh
+
+mkdir -p /mnt/redis/snapshots/`hostname -s | gawk '{ print strftime("%s") "000-" $0; }'`
+cp /mnt/redis/dump.rdb /mnt/redis/snapshots/`hostname -s | gawk '{ print strftime("%s") "000-" $0; }'`/
+
+/usr/local/bin/s3put -a <%= @node[:ec2][:access_key] %> -s <%= @node[:ec2][:secret_key] %> -b db.piick.com -w -p /mnt/ `find /mnt/redis/snapshots/ -maxdepth 1 |tail -n 1`

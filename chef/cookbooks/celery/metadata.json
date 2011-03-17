@@ -1,0 +1,44 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Installs and configures celery",
+  "version": "0.1.0",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Piick, Inc",
+  "name": "celery",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+
+  },
+  "maintainer_email": "allan@piick.com"
+}

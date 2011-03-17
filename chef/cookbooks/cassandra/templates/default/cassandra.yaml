@@ -1,0 +1,485 @@
+# Cassandra YAML generated from previous config
+# Configuration wiki: http://wiki.apache.org/cassandra/StorageConfiguration
+authenticator: org.apache.cassandra.auth.AllowAllAuthenticator
+auto_bootstrap: false
+binary_memtable_throughput_in_mb: 256
+cluster_name: default
+column_index_size_in_kb: 64
+commitlog_directory: /mnt/commitlog
+commitlog_rotation_threshold_in_mb: 128
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000
+compaction_preheat_key_cache: true
+compaction_thread_priority: 1
+concurrent_reads: 4
+concurrent_writes: 32
+data_file_directories:
+- /mnt/data
+disk_access_mode: auto
+dynamic_snitch: false
+dynamic_snitch_badness_threshold: 0.0
+dynamic_snitch_reset_interval_in_ms: 600000
+dynamic_snitch_update_interval_in_ms: 100
+endpoint_snitch: org.apache.cassandra.locator.RackInferringSnitch
+flush_largest_memtables_at: 1.0
+hinted_handoff_enabled: true
+hinted_handoff_throttle_delay_in_ms: 0
+in_memory_compaction_limit_in_mb: 256
+index_interval: 128
+keyspaces:
+- column_families:
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: User
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: User_Email
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: User_Username
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: User_ExternalId
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: User_Name
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: LongType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Line
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: LineItem
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: LineItem_Votes
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: LineItem_Followers
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Tag
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Tag_User
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Tag_Product
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Tag_LineItem
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Followers
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Leaders
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Group
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Group_User
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: GroupMembership
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: GroupMemberOf
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: ForgotPasswordConfirmation
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: LongType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Alert
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: LongType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Activity
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: View
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Product
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Product_Sale
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: Category
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: ProductGraph
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: BetaEmail
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  - column_metadata: []
+    column_type: Standard
+    compare_with: BytesType
+    gc_grace_seconds: 864000
+    key_cache_save_period_in_seconds: 14400
+    keys_cached: 200000.0
+    max_compaction_threshold: 32
+    memtable_flush_after_mins: 60
+    memtable_operations_in_millions: 0.3
+    memtable_throughput_in_mb: 64
+    min_compaction_threshold: 4
+    name: BetaInvite
+    read_repair_chance: 1.0
+    row_cache_save_period_in_seconds: 0
+    rows_cached: 0.0
+  name: piick
+  replica_placement_strategy: org.apache.cassandra.locator.RackUnawareStrategy
+  replication_factor: 1
+listen_address: 10.0.2.15
+max_hint_window_in_ms: 2147483647
+partitioner: org.apache.cassandra.dht.RandomPartitioner
+phi_convict_threshold: 8
+reduce_cache_capacity_to: 0.6
+reduce_cache_sizes_at: 1.0
+rpc_keepalive: true
+rpc_port: 9160
+rpc_timeout_in_ms: 10000
+saved_caches_directory: /mnt/caches
+seeds:
+- 127.0.0.1
+sliced_buffer_size_in_kb: 64
+snapshot_before_compaction: false
+storage_port: 7000
+thrift_framed_transport_size_in_mb: 15
+thrift_max_message_length_in_mb: 16

@@ -1,0 +1,4 @@
+default=east:rdef
+<% @node[:cassandra][:rack_properties].each{|ip, rack| %>
+<%= ip %>=<%= rack %>
+<% } %>

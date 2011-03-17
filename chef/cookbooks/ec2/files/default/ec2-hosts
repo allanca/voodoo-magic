@@ -1,0 +1,18 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+import boto
+import sys
+
+print "127.0.0.1\tlocalhost"
+
+ec2 = boto.connect_ec2(sys.argv[1], sys.argv[2])
+rsvps = ec2.get_all_instances()
+for rsvp in rsvps:
+  for instance in rsvp.instances:
+    if instance.state == 'running':
+      if 'Name' in instance.tags: 
+        print instance.private_ip_address, "\t", instance.tags['Name']
+print ''
+print '127.0.0.1\tlocalhost'
+print '127.0.0.1\t' + open('/etc/hostname', 'r').read()

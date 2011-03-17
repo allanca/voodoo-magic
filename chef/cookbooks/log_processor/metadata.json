@@ -1,0 +1,46 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache v2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Processes and reports from the scribe logs",
+  "version": "0.1.0",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Piick, Inc",
+  "name": "log_processor",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+    "pycassa": [
+
+    ]
+  },
+  "maintainer_email": "allan@piick.com"
+}

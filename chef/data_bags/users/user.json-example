@@ -1,0 +1,13 @@
+{
+  "id": "user",
+  "ssh_keys": "",
+  "groups": "sysadmin",
+  "uid": 2001,
+  "shell": "\/bin\/bash",
+  "comment": "User Name",
+  "nagios": {
+    "pager": "",
+    "email": ""
+  },
+  "openid": ""
+}

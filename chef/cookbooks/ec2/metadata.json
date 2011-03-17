@@ -1,0 +1,39 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache v2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Configures EC2 environment",
+  "version": "0.1.0",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Piick",
+  "name": "ec2",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+
+  },
+  "maintainer_email": "allan@piick.com"
+}

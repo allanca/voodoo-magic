@@ -1,0 +1,107 @@
+<Storage>
+  <ClusterName><%= @node[:cassandra][:cluster_name] %></ClusterName>
+  <AutoBootstrap><%= @node[:cassandra][:autobootstrap] %></AutoBootstrap>
+
+  <Keyspaces>
+    <Keyspace Name="piick">
+      <!--
+       ~ BytesType: Simple sort by byte value.  No validation is performed.
+       ~ AsciiType: Like BytesType, but validates that the input can be 
+       ~            parsed as US-ASCII.
+       ~ UTF8Type: A string encoded as UTF8
+       ~ LongType: A 64bit long
+       ~ LexicalUUIDType: A 128bit UUID, compared lexically (by byte value)
+       ~ TimeUUIDType: a 128bit version 1 UUID, compared by timestamp
+      -->
+      <ColumnFamily CompareWith="BytesType"       Name="User"/>
+      <ColumnFamily CompareWith="BytesType"       Name="User_Email"/>
+      <ColumnFamily CompareWith="BytesType"       Name="User_Username"/>
+      <ColumnFamily CompareWith="BytesType"       Name="User_ExternalId"/>
+      <ColumnFamily CompareWith="BytesType"       Name="User_Name"/>
+      
+      <ColumnFamily CompareWith="LongType"        Name="Line"/>
+      <ColumnFamily CompareWith="BytesType"       Name="LineItem"/>
+      <ColumnFamily CompareWith="BytesType"       Name="LineItem_Votes"/>
+      <ColumnFamily CompareWith="BytesType"       Name="LineItem_Followers"/>
+
+      <ColumnFamily CompareWith="BytesType"       Name="Tag"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Tag_User"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Tag_Product"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Tag_LineItem"/>
+      
+      <ColumnFamily CompareWith="BytesType"       Name="Followers"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Leaders"/>
+
+      <ColumnFamily CompareWith="BytesType"       Name="Group"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Group_User"/>
+      <ColumnFamily CompareWith="BytesType"       Name="GroupMembership"/>
+      <ColumnFamily CompareWith="BytesType"       Name="GroupMemberOf"/>
+      
+      <ColumnFamily CompareWith="BytesType"       Name="ForgotPasswordConfirmation"/>
+
+      <ColumnFamily CompareWith="LongType"        Name="Alert"/>
+      <ColumnFamily CompareWith="LongType"        Name="Activity"/>
+
+      <ColumnFamily CompareWith="BytesType"       Name="View"/>
+
+      <ColumnFamily CompareWith="BytesType"       Name="Product"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Product_Sale"/>
+      <ColumnFamily CompareWith="BytesType"       Name="Category"/>
+
+      <ColumnFamily CompareWith="BytesType"       Name="ProductGraph"/>
+
+      <ColumnFamily CompareWith="BytesType"       Name="BetaEmail"/>
+      <ColumnFamily CompareWith="BytesType"       Name="BetaInvite"/>
+
+      
+      <% if @node[:cassandra][:rack_aware] %>
+      <ReplicaPlacementStrategy>org.apache.cassandra.locator.RackAwareStrategy</ReplicaPlacementStrategy>
+      <% else %>
+      <ReplicaPlacementStrategy>org.apache.cassandra.locator.RackUnawareStrategy</ReplicaPlacementStrategy>
+      <% end %>
+      
+      <!-- Number of replicas of the data -->
+      <ReplicationFactor><%= @node[:cassandra][:replication_factor] %></ReplicationFactor>
+      <EndPointSnitch>org.apache.cassandra.locator.EndPointSnitch</EndPointSnitch>
+    </Keyspace>
+  </Keyspaces>
+
+  <Authenticator>org.apache.cassandra.auth.AllowAllAuthenticator</Authenticator>
+  <Partitioner>org.apache.cassandra.dht.RandomPartitioner</Partitioner>
+  <InitialToken></InitialToken>
+
+  <CommitLogDirectory><%= @node[:cassandra][:commit_root] %></CommitLogDirectory>
+  <DataFileDirectories>
+      <DataFileDirectory><%= @node[:cassandra][:data_root] %></DataFileDirectory>
+  </DataFileDirectories>
+  <SavedCachesDirectory><%= @node[:cassandra][:cache_root] %></SavedCachesDirectory>
+
+  <Seeds>
+      <Seed><%= @node[:cassandra][:seed_ipaddress] %></Seed>
+  </Seeds>
+  <RpcTimeoutInMillis>10000</RpcTimeoutInMillis>
+  <CommitLogRotationThresholdInMB>128</CommitLogRotationThresholdInMB>
+  <ListenAddress><%= @node[:ipaddress] %></ListenAddress>
+  <StoragePort>7000</StoragePort>
+  <ThriftAddress>0.0.0.0</ThriftAddress>
+  <ThriftPort>9160</ThriftPort>
+  <ThriftFramedTransport>true</ThriftFramedTransport>
+
+  <DiskAccessMode>auto</DiskAccessMode>
+  <RowWarningThresholdInMB>512</RowWarningThresholdInMB>
+  <SlicedBufferSizeInKB>64</SlicedBufferSizeInKB>
+  <FlushDataBufferSizeInMB>32</FlushDataBufferSizeInMB>
+  <FlushIndexBufferSizeInMB>8</FlushIndexBufferSizeInMB>
+  <ColumnIndexSizeInKB>64</ColumnIndexSizeInKB>
+  <MemtableThroughputInMB>64</MemtableThroughputInMB>
+  <BinaryMemtableThroughputInMB>256</BinaryMemtableThroughputInMB>
+  <MemtableOperationsInMillions>0.3</MemtableOperationsInMillions>
+  <MemtableFlushAfterMinutes>60</MemtableFlushAfterMinutes>
+  <ConcurrentReads>4</ConcurrentReads>
+  <ConcurrentWrites>32</ConcurrentWrites>
+  <CommitLogSync>periodic</CommitLogSync>
+  <CommitLogSyncPeriodInMS>10000</CommitLogSyncPeriodInMS>
+  <GCGraceSeconds>864000</GCGraceSeconds>
+  <FlushMinThreads>4</FlushMinThreads>
+  <FlushMaxThreads>4</FlushMaxThreads>
+</Storage>

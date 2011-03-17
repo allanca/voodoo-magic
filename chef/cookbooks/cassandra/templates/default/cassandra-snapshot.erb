@@ -1,0 +1,5 @@
+#!/bin/sh
+
+/opt/apache-cassandra-<%= @node[:cassandra][:version] %>/bin/nodetool -h localhost -p 10036 snapshot <%= @node[:hostname] %>
+/usr/local/bin/s3put -a <%= @node[:ec2][:access_key] %> -s <%= @node[:ec2][:secret_key] %> -b db.piick.com -w -p /mnt/data/ `find /mnt/data/system/snapshots/ -maxdepth 1 |tail -n 1`
+/usr/local/bin/s3put -a <%= @node[:ec2][:access_key] %> -s <%= @node[:ec2][:secret_key] %> -b db.piick.com -w -p /mnt/data/ `find /mnt/data/piick/snapshots/ -maxdepth 1 | tail -n 1`

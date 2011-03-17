@@ -1,0 +1,49 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache v2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Server for static content and ssl termination in front of HAProxy.",
+  "version": "0.1.0",
+  "long_description": "",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "Piick, Inc",
+  "name": "static_server",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+    "munin": [
+
+    ],
+    "nginx": [
+
+    ]
+  },
+  "maintainer_email": "allan@piick.com"
+}

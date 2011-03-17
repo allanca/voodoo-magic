@@ -1,0 +1,46 @@
+{
+  "groupings": {
+
+  },
+  "platforms": {
+    "debian": [
+
+    ],
+    "ubuntu": [
+
+    ]
+  },
+  "recommendations": {
+
+  },
+  "license": "Apache 2.0",
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "description": "Installs and configures cassandra",
+  "version": "0.1.0",
+  "long_description": "Testing on ubuntu 9.04",
+  "providing": {
+
+  },
+  "attributes": {
+
+  },
+  "maintainer": "AboutUs, Inc.",
+  "name": "cassandra",
+  "recipes": {
+
+  },
+  "replacing": {
+
+  },
+  "dependencies": {
+    "munin": [
+
+    ]
+  },
+  "maintainer_email": "lyric@aboutus.com"
+}

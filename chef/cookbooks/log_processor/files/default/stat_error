@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+stat_error
+
+Runs every five minutes and sends a report when there are errors.
+
+Copyright (c) 2010 Piick.com, Inc. All rights reserved.
+"""
+
+from email.mime.text import MIMEText
+import smtplib
+import os
+import re
+import shutil
+import sys
+import time
+
+# Send Allan a text message and email anytime there's an error in the log
+error_log = '/var/log/scribe/root/root_current'
+last_accessed_diff = (time.time() - os.path.getmtime(error_log))
+if last_accessed_diff < 60*5 + 30 and os.path.getsize(error_log) > 0:
+    text = []
+    error_line_count = 0
+    for line in open(error_log, 'r'):
+        line = re.sub(r'\\n(\s*[0-9]+|\s+)', '\n\g<1>', line)
+        text.extend(line.split('\n'))
+        error_line_count += 1
+
+    from_email = "root@errors.piick.com"
+    to_emails = sys.argv[1].split(',')
+    to_txts = '4252832119@txt.att.net'
+
+    msg = MIMEText("\r\n".join(text), 'plain')
+    msg['Subject'] = 'Piick Errors'
+    msg['From'] = from_email
+    msg['To'] = ";".join(to_emails)
+
+    txt = MIMEText('%d Errors on the server.' % error_line_count, 'plain')
+    txt['Subject'] = 'Piick Errors'
+    txt['From'] = from_email
+    txt['To'] = ";".join(to_txts)
+
+    s = smtplib.SMTP("127.0.0.1")
+    s.sendmail(from_email, to_emails, msg.as_string())
+    s.sendmail(from_email, to_txts, txt.as_string())
+    s.quit()

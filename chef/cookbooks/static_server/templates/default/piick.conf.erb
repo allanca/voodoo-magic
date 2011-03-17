@@ -1,0 +1,53 @@
+
+# Send all traffic through HAProxy
+upstream loadbalancer {
+    server 127.0.0.1:<%= @node[:haproxy][:listen_port] %>;
+}
+
+server {
+    listen 80;
+    listen 443 default ssl;
+
+    ssl_certificate      /etc/nginx/conf.d/piick.crt;
+    ssl_certificate_key  /etc/nginx/conf.d/piick.key;
+
+    # Allow file uploads
+    client_max_body_size 5M;
+
+    location /nginx_status {
+     stub_status on;
+     access_log off;
+     allow 127.0.0.1;
+     deny all;
+    }
+    location ^~ /static/ {
+        root <%= @node[:static_server][:static_base_dir] %>;
+        if ($query_string) {
+            expires max;
+        }
+    }
+    location = /favicon.ico {
+        rewrite (.*) /static/favicon.ico;
+    }
+    location = /robots.txt {
+        rewrite (.*) /static/robots.txt;
+    }
+
+    location / {
+        <% if @node[:static_server][:site_down] %>
+        rewrite (.*) /static/index.html;
+        <% else %>
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Real-IP $http_x_forwarded_for;
+        proxy_set_header X-Scheme $scheme;
+        proxy_pass http://loadbalancer;
+        <% end %>
+    }
+    
+    if ($host = 'www.<%= @node[:static_server][:base_url] %>') {
+        rewrite  ^/(.*)$  http://<%= @node[:static_server][:base_url] %>/$1  permanent;
+    }
+}
